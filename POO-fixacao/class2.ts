@@ -1,21 +1,32 @@
 class Tv {
-    brand: string;
-    size: number;
-    resolution: string;
-    connections: string[];
-    connectedTo?: string;
+    private _brand: string;
+    private _size: number;
+    private _resolution: string;
+    private _connections: string[];
+    private _connectedTo?: string;
 
     constructor(b: string, s: number, r: string, c: string[]) {
-        this.brand = b;
-        this.size = s;
-        this.resolution = r;
-        this.connections = c;
+        this._brand = b;
+        this._size = s;
+        this._resolution = r;
+        this._connections = c;
+    }
+
+    get connections(): string | undefined {
+        return this._connectedTo;
+    }
+
+    set newConnections(newConnection: string | undefined) {
+        if(!newConnection || this._connections.includes(newConnection)) {
+            this._connectedTo = newConnection;
+        } else { console.log('Sorry, connection unavailable!');
+         }
     }
 
    turnOn():void {
     console.log(
-      `TV ${this.brand}, ${this.size}", resolution: ${this.resolution} \n\
-available connections: ${this.connections}`,
+      `TV ${this._brand}, ${this._size}", resolution: ${this._resolution} \n\
+available connections: ${this._connections}`,
     );
   }
 
@@ -23,3 +34,6 @@ available connections: ${this.connections}`,
 
 const tv1 = new Tv('LG', 32, '4K', ['HDMI', 'Ethernet', 'Wi-Fi']);
 tv1.turnOn();
+
+tv1.newConnections = 'HDMI';
+console.log('Connected to: ', tv1.connections);
